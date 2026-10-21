@@ -1,5 +1,7 @@
 # Practical investigation examples
 
+For an actual provider investigation, see [RHITE October 2026 case study](CASE_STUDY_OCTOBER_2026.md). The scenarios below remain fictional test examples.
+
 These examples are fictional. They use documentation network ranges and contain no real customer evidence.
 
 ## Case A: A suspicious pod with no infringement attribution

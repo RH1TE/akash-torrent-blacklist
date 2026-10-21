@@ -6,6 +6,12 @@ Maintained by RHITE LTD. This project is independent of Akash Network, Hetzner, 
 
 **This is not a list of people accused of piracy.** It is a record of reviewed observations tied to Akash tenant wallets. A BitTorrent client can have legitimate uses. Each provider sets its own acceptable use policy, investigates its own traffic and decides whether an entry is relevant.
 
+## Real incident walkthrough
+
+Our [October 2026 case study](docs/CASE_STUDY_OCTOBER_2026.md) reconstructs two short-lived torrent-related workloads on a RHITE Akash worker. It shows how we established tenant ownership using Kubernetes and on-chain lease records, what the complaints alleged, why we could not confirm the reported outbound NAT ports, and how we distinguished local containment from a public blacklist decision.
+
+This is an actual investigation with identifying wallet and hosting details withheld, not an invented example. **The tenant is not currently listed in the public approved feed.** Our private case file holds the exact evidence and is reviewed separately.
+
 ## Why this exists
 
 A copyright complaint will normally identify a public IP, a timestamp and an observed source port. An Akash worker can have several unrelated workloads behind that IP. A tenant can also terminate a lease before the operator receives the notice. The address in the notice identifies the host, not necessarily the workload.

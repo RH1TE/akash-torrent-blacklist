@@ -2,6 +2,12 @@
 
 ## 2026-10-21
 
+### Real investigation case study
+
+- Added a redacted RHITE October 2026 incident walkthrough showing how two tenant workloads were linked through K3s and Akash leases, and why the copyright allegations remain unproven without historical source NAT records.
+- Kept the actual wallet and exact deployment identifiers in the private RHITE case record, not the public approved feed.
+
+
 ### Operator toolkit expansion
 
 - Added detailed evidence standards, case categories, two-reviewer format and expiry rules.

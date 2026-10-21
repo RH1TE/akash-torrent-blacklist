@@ -1,6 +1,6 @@
 # Accepted case record format
 
-A case is an approved, reviewable explanation of why an Akash tenant wallet was added. The file name must match its ID, for example `AKT-2026-001.json`.
+A case is an approved, reviewable explanation of why an Akash tenant wallet was added. An unapproved real incident can be described as a redacted [case study](../docs/CASE_STUDY_OCTOBER_2026.md), but must not create a case JSON file or feed entry. The file name must match its ID, for example `AKT-2026-001.json`.
 
 **Do not publish unreviewed allegations here.** An issue without an approved case record never enters either feed.
 

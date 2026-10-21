@@ -1,72 +1,92 @@
-name: Report torrent-related abuse
-description: Submit an incident for evidence review
+name: Submit a tenant abuse report
+description: Report observed P2P activity for maintainer review
 title: "[Report] "
 labels: ["needs-review"]
 body:
   - type: markdown
     attributes:
       value: |
-        This issue is public. Do not include personal IP addresses, passwords, private logs, media files or unredacted infringement notices. A report is not an approved listing.
+        Reports are public and do not automatically blacklist a wallet. Do not post private client IPs, personal identities, full access logs, private network maps, media content or unredacted copyright complaints. See REVIEW.md before submitting.
   - type: input
     id: wallet
     attributes:
       label: Akash tenant wallet
+      description: On-chain tenant account, not a provider or treasury wallet.
       placeholder: akash1...
     validations:
       required: true
   - type: input
     id: dseq
     attributes:
-      label: Deployment ID (DSEQ)
+      label: Deployment sequence number
+      placeholder: DSEQ from the on-chain lease
     validations:
       required: true
   - type: input
-    id: timeframe
+    id: time
     attributes:
-      label: When did this happen? (UTC)
-      placeholder: 2026-10-20 16:30 UTC
+      label: Incident time or observation window in UTC
+      placeholder: 2026-01-15T12:00:00Z
+    validations:
+      required: true
+  - type: input
+    id: region
+    attributes:
+      label: Provider region
+      placeholder: eu-central
     validations:
       required: true
   - type: dropdown
     id: category
     attributes:
-      label: Type of report
+      label: Proposed finding
       options:
-        - Suspicious activity, still investigating
-        - P2P workload prohibited by provider terms
-        - Copyright infringement with confirmed tenant-level network evidence
+        - Investigation lead only
+        - P2P workload prohibited by the provider AUP
+        - Reported infringement with session-level technical attribution
     validations:
       required: true
   - type: textarea
-    id: findings
+    id: work
     attributes:
-      label: What did you observe?
-      description: Explain the activity and how it relates to the deployment.
+      label: What actually ran?
+      description: Container, command, pod runtime or service evidence. Distinguish configuration from execution.
     validations:
       required: true
   - type: textarea
-    id: evidence
+    id: records
     attributes:
-      label: Supporting records
-      description: Describe two independent records. Keep private evidence out of public issues.
+      label: Independent evidence records
+      description: Describe original source, timestamp and the fact it establishes. Do not attach private raw logs.
     validations:
       required: true
   - type: textarea
-    id: uncertainty
+    id: network
     attributes:
-      label: What remains unverified?
-      description: Disclose any gaps in attribution or evidence.
+      label: Network attribution
+      description: Was a historical NAT source-port or flow mapping preserved? If not, say so.
     validations:
       required: true
-  - type: input
-    id: aup
+  - type: textarea
+    id: policy
     attributes:
-      label: Applicable provider policy, if any
-      description: Link to the relevant terms or give the provision and effective date.
+      label: Relevant provider acceptable use policy
+      description: Public link or relevant wording and date. State if no explicit policy applied.
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: What is not established?
+      description: False-positive possibilities, shared IP issues, missing packets or clock uncertainty.
+    validations:
+      required: true
   - type: checkboxes
-    id: statement
+    id: declaration
     attributes:
       label: Confirmation
       options:
-        - label: I have removed confidential material and understand this report will be reviewed before publication.
+        - label: I can verify the report evidence and have excluded personal data, private logs and confidential material.
+          required: true
+        - label: I understand that opening this issue does not add a wallet to the blacklist.
           required: true

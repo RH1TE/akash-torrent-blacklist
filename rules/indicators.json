@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "purpose": "Indicators for human investigation, not automatic blacklisting or proof of infringement",
+  "indicators": [
+    {
+      "id": "client-qbittorrent",
+      "pattern": "(^|[^a-z0-9])qbit(torrent)?([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "Common name of the qBittorrent client",
+      "false_positive": "Legal downloads or deliberately labelled test workloads"
+    },
+    {
+      "id": "client-transmission",
+      "pattern": "(^|[^a-z0-9])transmission([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "Common name of the Transmission client",
+      "false_positive": "Network telemetry or generic transmission libraries"
+    },
+    {
+      "id": "client-deluge",
+      "pattern": "(^|[^a-z0-9])deluge([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "Common name of the Deluge client",
+      "false_positive": "Legitimate software distribution"
+    },
+    {
+      "id": "client-rtorrent",
+      "pattern": "(^|[^a-z0-9])(r|ru)torrent([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "rTorrent or ruTorrent naming convention",
+      "false_positive": "Test images with descriptive tags"
+    },
+    {
+      "id": "client-aria2",
+      "pattern": "(^|[^a-z0-9])aria2c?([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "low",
+      "reason": "aria2 can support torrents as well as HTTP downloads",
+      "false_positive": "Legitimate HTTP or mirror downloader"
+    },
+    {
+      "id": "client-libtorrent",
+      "pattern": "(^|[^a-z0-9])libtorrent([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "Common BitTorrent library name",
+      "false_positive": "Library present but not running P2P"
+    },
+    {
+      "id": "client-webtorrent",
+      "pattern": "(^|[^a-z0-9])webtorrent([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "medium",
+      "reason": "WebTorrent client naming",
+      "false_positive": "Demo services and legitimate P2P uses"
+    },
+    {
+      "id": "workload-torrent",
+      "pattern": "(^|[^a-z0-9])torrent([a-z0-9_-]*)([^a-z0-9]|$)",
+      "fields": ["image", "container", "command", "args", "pod"],
+      "severity": "low",
+      "reason": "Torrent-related name in a workload declaration",
+      "false_positive": "Harmless project name or fake label"
+    }
+  ]
+}

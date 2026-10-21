@@ -1,0 +1,27 @@
+{
+  "scanner": {
+    "schedule_minutes": 5,
+    "kubectl_pod_export": "restricted/local-reports",
+    "notify_only": true,
+    "delete_pods": false,
+    "ban_wallets": false
+  },
+  "traffic": {
+    "window_minutes": 15,
+    "distinct_peers_alert": 60,
+    "egress_bytes_alert": 1000000000,
+    "metadata_retention_days": 14,
+    "capture_payloads": false
+  },
+  "feed": {
+    "url": "https://raw.githubusercontent.com/RH1TE/akash-torrent-blacklist/main/blacklist.txt",
+    "use_commit_pin_in_production": true,
+    "enforce_by_default": false,
+    "local_allow_override": true
+  },
+  "incident": {
+    "response_priority": "urgent",
+    "preserve_logs_before_restarts": true,
+    "publish_raw_notices": false
+  }
+}

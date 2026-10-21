@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "id": "AKT-2026-001",
+  "wallet": "REPLACE_WITH_REAL_VERIFIED_TENANT_WALLET",
+  "chain_id": "akashnet-2",
+  "dseqs": ["1792500000001"],
+  "category": "prohibited-p2p",
+  "provider_region": "eu-example",
+  "provider_policy": "Example operator policy barred P2P hosting during this fictional incident.",
+  "observed_utc": "2026-01-15T12:00:00Z",
+  "approved_utc": "2026-10-21T10:00:00Z",
+  "expires_on": "2027-01-01",
+  "reviewers": ["example-reviewer-one", "example-reviewer-two"],
+  "issue": "https://github.com/RH1TE/akash-torrent-blacklist/issues/1",
+  "decision": "Synthetic example, not a finding about any real wallet or activity.",
+  "risk_notes": "All example observations are fictional and the wallet is deliberately invalid.",
+  "records": [
+    {"kind": "deployment", "source_id": "example-chain-001", "summary": "Fictional owner and DSEQ were compared to chain metadata."},
+    {"kind": "runtime", "source_id": "example-runtime-001", "summary": "Fictional client process execution was verified in the example."},
+    {"kind": "policy", "source_id": "example-policy-001", "summary": "Example operator policy described a P2P restriction at the observation time."}
+  ]
+}

@@ -8,3 +8,8 @@ evidence/
 *.log
 *.tar.gz
 .DS_Store
+local-reports/
+restricted/
+state/
+*.jsonl.private
+logs/

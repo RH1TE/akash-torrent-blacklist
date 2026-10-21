@@ -1,0 +1,32 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "metadata": {
+        "namespace": "tenant-example",
+        "name": "downloads-6c78d",
+        "uid": "example-pod-001",
+        "labels": {
+          "akash.network/lease.id.dseq": "1792500000001",
+          "akash.network/lease.id.owner": "synthetic-wallet-not-real"
+        }
+      },
+      "spec": {
+        "nodeName": "sample-worker",
+        "containers": [
+          {"name": "downloads", "image": "ghcr.io/example/qbittorrent:sample", "command": ["/bin/start"]}
+        ]
+      },
+      "status": {"phase": "Running"}
+    },
+    {
+      "metadata": {"namespace": "tenant-example-other", "name": "api-58898", "uid": "example-pod-002"},
+      "spec": {
+        "nodeName": "sample-worker",
+        "containers": [{"name": "api", "image": "nginx:1.30-alpine", "args": ["-g", "daemon off;"]}]
+      },
+      "status": {"phase": "Running"}
+    }
+  ]
+}

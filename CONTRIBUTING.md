@@ -1,25 +1,39 @@
-# Contributing
+# Contributions
 
-We welcome reports from datacentre operators, Akash providers and people who can supply reliable technical evidence.
+This repository is built around operator evidence rather than screenshots circulating between servers.
 
-Please use the [incident report form](../../issues/new/choose) rather than editing the blacklist directly.
+## Submit a report
 
-A useful report contains the tenant wallet, DSEQ, observation time in UTC, a short description of the activity, the provider's relevant policy and a factual account of how the activity was attributed to that tenant.
+Use the [report form](https://github.com/RH1TE/akash-torrent-blacklist/issues/new/choose). Describe the incident in UTC, include the tenant wallet and DSEQ, explain the behaviour observed and provide a policy reference when one is relevant.
 
-Be clear about what you know and what you do not know. For example, an infringement notice and a torrent-labelled deployment starting two minutes earlier are correlated facts, but do not alone prove the file was transferred by that deployment.
+If you have evidence from your own worker, explain the source and observation time. Suitable sources include on-chain lease records, saved Kubernetes pod and CNI logs, a preserved process record or retained network flow mapping. An upstream copyright notice is a report of an observation, not proof of source pod attribution.
 
-**Before publishing anything:** remove personal IP addresses, names, private logs, access tokens, customer account data, media files and full copyright notices. Public GitHub history is difficult to erase. Maintainers can review confidential records separately.
+Do not upload a full `kubectl get pods -A -o json` output, raw nft/conntrack logs, private public-to-pod IP mappings, personally identifying information, media titles and hashes, keyrings, access tokens or the entire infringement notice. Keep originals in controlled storage. Public issue comments should contain only sanitised summaries.
 
-## For maintainers
+Reporters must state the gaps. If you only know that a torrent-labelled container appeared just before an infringement complaint, record it as a lead for investigation.
 
-1. Review the issue and record the reason for acceptance or refusal.
-2. For accepted cases, create a JSON file in `cases/` following [cases/FORMAT.md](cases/FORMAT.md).
-3. Run `python3 tools/list.py build`.
-4. Open a pull request containing the case and regenerated `blacklist.txt`.
-5. Check the automated tests, request code-owner review and merge only after approval.
+## Review process
 
-For rejected reports, explain the decision and close the issue. Do not edit the blacklist.
+1. The report is triaged and checked for private information.
+2. Reviewers verify ownership, DSEQ, timestamps, runtime evidence and the provider's AUP.
+3. The report is accepted, declined or held for more evidence. Reasons are recorded.
+4. Only accepted reports become case JSON records. Use [the format guide](cases/FORMAT.md).
+5. Run `python3 tools/list.py build`, then `python3 tools/list.py verify` and the full test suite.
+6. Open a PR linked to the original issue and have another reviewer check it.
+7. Publish the decision by merging the reviewed PR. Unaccepted reports do not appear in the feed.
 
-Report an error or request removal through the appeal issue template.
+## Update detection indicators
 
-See [REVIEW.md](REVIEW.md) for the decision standard.
+The [indicator rules](rules/indicators.json) are a human-review scanner configuration, not a ban policy. A new rule needs a descriptive ID, exact matching pattern, severity, rationale, fields to inspect and a realistic false-positive example.
+
+Include a positive fixture that detects the intended case and a negative fixture that proves a legitimate name will not be flagged. Changes should not introduce generic word matching that incorrectly identifies every media server, downloader, seed database or networking tool.
+
+## Fix a mistake
+
+Use the [appeal template](https://github.com/RH1TE/akash-torrent-blacklist/issues/new/choose) or a correction PR referencing the existing case. Give concrete new information and request a remedy. The public feed is regenerated after an approved removal or reclassification.
+
+## General expectations
+
+Make a claim no stronger than the evidence supports. Be civil and specific. Avoid personal identification, threats, guesses about geography and statements that BitTorrent use is automatically illegal.
+
+Maintainers may reject unreliable or privacy-invasive contributions. All public code changes need CI and code-owner review. RHITE LTD keeps authority over the published registry but will record decisions and corrections.

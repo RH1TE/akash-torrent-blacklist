@@ -3,6 +3,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: "23 5 * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,7 +13,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,18 +21,31 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Check cases and blacklist
+      - name: Validate cases and both feeds
         run: python3 tools/list.py verify
-      - name: Run tests
+      - name: Unit tests
         run: python3 -m unittest discover -s tests -v
-      - name: Check for sensitive files
+      - name: Validate indicator configuration and example scanner
+        run: |
+          python3 tools/scan_pods.py --input examples/pods.json --format json > /tmp/scan-results.json
+          python3 -c 'import json; d=json.load(open("/tmp/scan-results.json")); assert d["finding_count"] == 1'
+          python3 tools/correlate_flows.py --flows examples/flows.jsonl --public-ip 203.0.113.10 --public-port 42000 --protocol tcp --at 2026-01-15T12:00:00Z --dest-ip 198.51.100.40 --dest-port 51413 > /tmp/flow-results.json
+          python3 -c 'import json; d=json.load(open("/tmp/flow-results.json")); assert d["status"] == "single_tuple_match_requires_source_verification"'
+      - name: Reject potential private artefacts
         run: |
           python3 - <<'PY'
-          import subprocess, sys
-          paths = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
-          blocked = [p for p in paths if p.startswith(("private/", "evidence/")) or p.endswith((".log", ".tar.gz", ".pem", ".key", ".p12"))]
-          if blocked:
-              print("Unexpected private files:", blocked)
+          import pathlib, subprocess, sys
+          files = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          banned = ("private/", "evidence/", "state/")
+          extensions = (".log", ".tar.gz", ".pem", ".key", ".p12", ".pcap")
+          bad = [x for x in files if x.startswith(banned) or x.endswith(extensions)]
+          if bad:
+              print("Files requiring private handling:", bad)
               sys.exit(1)
-          print("No sensitive-looking paths tracked")
+          for file in files:
+              f = pathlib.Path(file)
+              if f.is_file() and b"\xe2\x80\x94" in f.read_bytes():
+                  print("Em dash found in:", file)
+                  sys.exit(1)
+          print("Tracked files contain no disallowed paths or em dashes")
           PY

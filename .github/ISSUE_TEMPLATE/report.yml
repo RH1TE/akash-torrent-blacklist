@@ -1,0 +1,72 @@
+name: Report torrent-related abuse
+description: Submit an incident for evidence review
+title: "[Report] "
+labels: ["needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not include personal IP addresses, passwords, private logs, media files or unredacted infringement notices. A report is not an approved listing.
+  - type: input
+    id: wallet
+    attributes:
+      label: Akash tenant wallet
+      placeholder: akash1...
+    validations:
+      required: true
+  - type: input
+    id: dseq
+    attributes:
+      label: Deployment ID (DSEQ)
+    validations:
+      required: true
+  - type: input
+    id: timeframe
+    attributes:
+      label: When did this happen? (UTC)
+      placeholder: 2026-10-20 16:30 UTC
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Type of report
+      options:
+        - Suspicious activity, still investigating
+        - P2P workload prohibited by provider terms
+        - Copyright infringement with confirmed tenant-level network evidence
+    validations:
+      required: true
+  - type: textarea
+    id: findings
+    attributes:
+      label: What did you observe?
+      description: Explain the activity and how it relates to the deployment.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting records
+      description: Describe two independent records. Keep private evidence out of public issues.
+    validations:
+      required: true
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: What remains unverified?
+      description: Disclose any gaps in attribution or evidence.
+    validations:
+      required: true
+  - type: input
+    id: aup
+    attributes:
+      label: Applicable provider policy, if any
+      description: Link to the relevant terms or give the provision and effective date.
+  - type: checkboxes
+    id: statement
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have removed confidential material and understand this report will be reviewed before publication.
+          required: true

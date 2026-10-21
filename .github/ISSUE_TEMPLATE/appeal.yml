@@ -1,0 +1,28 @@
+name: Request correction or removal
+description: Challenge an entry or supply new evidence
+title: "[Appeal] "
+labels: ["appeal"]
+body:
+  - type: input
+    id: reference
+    attributes:
+      label: Case ID or issue link
+    validations:
+      required: true
+  - type: dropdown
+    id: request
+    attributes:
+      label: Requested action
+      options:
+        - Remove the wallet
+        - Correct the case record
+        - Review expired or outdated evidence
+    validations:
+      required: true
+  - type: textarea
+    id: basis
+    attributes:
+      label: Reason and supporting facts
+      description: Do not post identifying information or private evidence.
+    validations:
+      required: true

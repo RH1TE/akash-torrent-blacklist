@@ -1,0 +1,36 @@
+name: Check blacklist
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check cases and blacklist
+        run: python3 tools/list.py verify
+      - name: Run tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Check for sensitive files
+        run: |
+          python3 - <<'PY'
+          import subprocess, sys
+          paths = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          blocked = [p for p in paths if p.startswith(("private/", "evidence/")) or p.endswith((".log", ".tar.gz", ".pem", ".key", ".p12"))]
+          if blocked:
+              print("Unexpected private files:", blocked)
+              sys.exit(1)
+          print("No sensitive-looking paths tracked")
+          PY

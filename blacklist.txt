@@ -1,0 +1,2 @@
+# Approved Akash tenant wallets only
+# No reports have been accepted yet.
